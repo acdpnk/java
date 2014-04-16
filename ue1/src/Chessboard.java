@@ -8,7 +8,7 @@ public class Chessboard {
 
     public void set(boolean value, int x, int y){
         if(x>=size || y>=size){
-            System.out.println("you set the piece outside the board.");
+            System.out.println("you set the piece outside the board(" + x + "," + y + ")");
             System.exit(1);
         }
 
