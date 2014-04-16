@@ -7,7 +7,7 @@ public class Chessboard {
     }
 
     public void set(boolean value, int x, int y){
-        if(x>size || y>size){
+        if(x>=size || y>=size){
             System.out.println("you set the piece outside the board.");
             System.exit(1);
         }
@@ -16,7 +16,7 @@ public class Chessboard {
     }
 
     public boolean get(int x, int y){
-        if(x>size || y>size){
+        if(x>=size || y>=size){
             System.out.println("your tried to take a piece from outside the board.");
             System.exit(1);
         }
@@ -48,5 +48,5 @@ public class Chessboard {
         }
         return str;
     }
-
+    public int getSize(){return this.size;}
 }
