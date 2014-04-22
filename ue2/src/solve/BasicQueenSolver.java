@@ -1,3 +1,7 @@
+package solve;
+
+import model.Chessboard;
+
 public abstract class BasicQueenSolver{
     public abstract void solve();
     public boolean checkChessboard(Chessboard board){

@@ -1,3 +1,5 @@
+package solve;
+import model.Chessboard;
 public class BruteForce extends BasicQueenSolver{
     public static final int size = 8;
     public void solve(){

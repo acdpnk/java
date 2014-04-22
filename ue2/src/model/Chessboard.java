@@ -1,3 +1,4 @@
+package model;
 public class Chessboard {
     private int size;
     private boolean[][] fields;
