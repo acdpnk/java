@@ -1,8 +1,15 @@
 package solve;
 import model.Chessboard;
 public class BruteForce extends BasicQueenSolver{
+    /**
+     * Brute Force Solver
+     */
     public static final int size = 8;
     public void solve(){
+        /**
+         * Brute Force Method to solve the Many Queens Problem.
+         * Prints the solutions and number of solutions it finds.
+         */
         int solutions = 0;
         for(int a=0;a<size;a++){
           for(int b=0;b<size;b++){
