@@ -5,81 +5,139 @@ public class Queen implements Comparable<Queen>{
         this.x = x;
         this.y = y;
         this.conflicts = determineConflicts(board);
-        System.out.println(this.conflicts);
     }
 
 
     public int getConflicts(){
         return this.conflicts;
     }
+    public int getX(){
+        return this.x;
+    }
+    public int getY(){
+        return this.y;
+    }
 
+    public String toString(){
+        return "{X: " + this.getX() + ", Y: " + this.getY() + ", Conflicts: " + this.getConflicts() + "}";
+    }
+
+    @Override
     public int compareTo(Queen other){
-        return other.getConflicts()-this.getConflicts();
+        return this.getConflicts()-other.getConflicts();
     }
-    private int determineConflicts(Chessboard board){
+
+    public int determineConflicts(Chessboard board){
         int size = board.getSize();
-        int conflicts = 0;
+        int threats = 0;
 
-        for (int i=0; i<size; i++){
-            if(i==y){
+        for(int i=0; i<size; i++){
+            if(this.x==i){
                 continue;
             }
-            if(board.get(x,i)){
-                conflicts++;
+            if(board.get(i,this.y)){
+                threats++;
             }
         }
-        for (int j=0; j<size; j++){
-            if(j==x){
+        for(int j=0; j<size; j++){
+            if(this.y==j){
                 continue;
             }
-            if(board.get(j,y)){
-                conflicts++;
-            }
-        }
-
-        int xOffset = x-y;
-
-        for (int k=0; k<size; k++){
-            if(k+xOffset<0){
-                // field outside board
-                continue;
-            }
-            if(k+xOffset==x){
-                // field is the field we're checking conflict with
-                continue;
-            }
-            if(! ((k+xOffset)<size)){
-                // field (and all following fields) outside board
-                break;
-            }
-            if(board.get(k+xOffset, k)){
-                // conflict
-                conflicts++;
+            if(board.get(this.x,j)){
+                threats++;
             }
         }
 
-        xOffset = (size-1) + xOffset;
-        for (int l=0; l<size; l++){
-            if(! ((xOffset-l)<size)){
-                // field outside board
-                continue;
-            }
-            if(xOffset-l==x){
-                // field is the field we're checking for conflict with
-                continue;
-            }
-            if(xOffset-l<0){
-                // field (and all following fields) outside board
-                break;
-            }
-            if(board.get(xOffset-l,l)){
-                // conflict
-                conflicts++;
+        for(int k=1; this.x-k>=0 && this.y-k>=0; k++){
+            if(board.get(this.x-k, this.y-k)){
+                threats++;
             }
         }
-        return conflicts;
+
+        for(int l=1; this.x+l<size && this.y-l>=0; l++){
+            if(board.get(this.x+l, this.y-l)){
+                threats++;
+            }
+        }
+
+        for(int m=1; this.x+m<size && this.y+m<size; m++){
+            if(board.get(this.x+m, this.y+m)){
+                threats++;
+            }
+        }
+
+        for(int n=1; this.x-n>=0 && this.y+n<size; n++){
+            if(board.get(this.x-n, this.y+n)){
+                threats++;
+            }
+        }
+        return threats;
     }
+
 }
+    //public int determineConflicts(Chessboard board){
+        //int size = board.getSize();
+        //int conflicts = 0;
+
+        //for (int i=0; i<size; i++){
+            //if(i==y){
+                //continue;
+            //}
+            //if(board.get(x,i)){
+                //conflicts++;
+            //}
+        //}
+        //for (int j=0; j<size; j++){
+            //if(j==y){
+                //continue;
+            //}
+            //if(board.get(j,y)){
+                //conflicts++;
+            //}
+        //}
+
+        //int xOffset = x-y;
+
+        //for (int k=0; k<size; k++){
+            //if(k+xOffset<0){
+                //// field outside board
+                //continue;
+            //}
+            //if(k+xOffset==x){
+                //// field is the field we're checking conflict with
+                //continue;
+            //}
+            //if(! ((k+xOffset)<size)){
+                //// field (and all following fields) outside board
+                //break;
+            //}
+            //if(board.get(k+xOffset, k)){
+                //// conflict
+                //conflicts++;
+            //}
+        //}
+
+        //xOffset = (size-1) + xOffset;
+        //for (int l=0; l<size; l++){
+            //if(! ((xOffset-l)<size)){
+                //// field outside board
+                //continue;
+            //}
+            //if(xOffset-l==x){
+                //// field is the field we're checking for conflict with
+                //continue;
+            //}
+            //if(xOffset-l<0){
+                //// field (and all following fields) outside board
+                //break;
+            //}
+            //if(board.get(xOffset-l,l)){
+                //// conflict
+                //conflicts++;
+            //}
+        //}
+        //return conflicts;
+    //}
 
 
 
