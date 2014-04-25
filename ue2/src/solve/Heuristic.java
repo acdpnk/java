@@ -16,7 +16,6 @@ public class Heuristic extends BasicQueenSolver{
             Queen queen = getLeastConflicted(i,i);
             board.set(true, queen.getX(), queen.getY());
             queens.add(queen);
-            System.out.println(board);
         }
 
         int prev = -1;
@@ -25,9 +24,6 @@ public class Heuristic extends BasicQueenSolver{
         while (! checkChessboard(board)){
 
             Collections.sort(queens);
-
-            System.out.println(queens);
-            System.out.println(board);
 
             Queen mostConflicted = queens.get(dim-1);
             if(mostConflicted.getY()==prev){
@@ -62,7 +58,6 @@ public class Heuristic extends BasicQueenSolver{
 
 
     public Queen getLeastConflicted(int x, int y){
-        System.out.println("ping");
         ArrayList<Queen> row = new ArrayList<Queen>();
         ArrayList<Queen> candidates = new ArrayList<Queen>();
         for (int i=0; i<dim; i++){
@@ -70,7 +65,6 @@ public class Heuristic extends BasicQueenSolver{
         }
 
         Collections.sort(row);
-        System.out.println(row);
         int best = row.get(0).getConflicts();
 
         while (row.isEmpty() == false && row.get(0).getConflicts()==best){
@@ -84,7 +78,6 @@ public class Heuristic extends BasicQueenSolver{
         candidates.remove(0);
 
         while (replacement.getX()==x){
-            System.out.println(replacement);
             if(! candidates.isEmpty()){
                 replacement = candidates.get(0);
                 candidates.remove(0);
@@ -94,7 +87,7 @@ public class Heuristic extends BasicQueenSolver{
             }
 
         }
-        System.out.println("putting " + replacement);
+        //System.out.println("putting " + replacement);
 
         return replacement;
     }
