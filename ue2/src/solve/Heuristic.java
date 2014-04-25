@@ -3,15 +3,36 @@ import model.*;
 import java.util.ArrayList;
 import java.util.Collections;
 public class Heuristic extends BasicQueenSolver{
-    private static final int dim = 50;
+    /**
+     * Solver class implementing a heuristic solving algorithm for the Many
+     * Queens Problem.
+     */
+    private static final int STD_DIM = 50;
+    private int dim;
     private ArrayList<Queen> queens;
     private Chessboard board;
 
-    public Heuristic(){
+    public Heuristic(int dim){
+        /**
+         * Constructor.
+         * @param dim Dimension of the Board to be solved
+         * @return Solver
+         */
+        this.dim = dim;
         this.queens = new ArrayList<Queen>();
         this.board = new Chessboard(dim);
     }
+    public Heuristic(){
+        /**
+         * Constructor using standard dimension 50
+         * @return Solver
+         */
+        this(STD_DIM);
+    }
     public void solve(){
+        /**
+         * solve a board of the specified dimension and print the result
+         */
         for (int i=0;i<dim;i++){
             Queen queen = getLeastConflicted(i,i);
             board.set(true, queen.getX(), queen.getY());
@@ -57,7 +78,14 @@ public class Heuristic extends BasicQueenSolver{
     }
 
 
-    public Queen getLeastConflicted(int x, int y){
+    private Queen getLeastConflicted(int x, int y){
+        /**
+         * get the queen with the least possible conflict in row y, that is not
+         * also in column x. when multiple minima exists one is chosen at random.
+         * @param x column (returned Queen will *not* be here)
+         * @param y row (returned Queen *will* be here)
+         * @return Queen
+         */
         ArrayList<Queen> row = new ArrayList<Queen>();
         ArrayList<Queen> candidates = new ArrayList<Queen>();
         for (int i=0; i<dim; i++){
