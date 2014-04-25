@@ -27,6 +27,10 @@ public class Queen implements Comparable<Queen>{
         return this.getConflicts()-other.getConflicts();
     }
 
+    public void update(Chessboard board){
+        this.conflicts = this.determineConflicts(board);
+    }
+
     public int determineConflicts(Chessboard board){
         int size = board.getSize();
         int threats = 0;
