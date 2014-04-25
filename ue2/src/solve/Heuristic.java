@@ -52,7 +52,7 @@ public class Heuristic extends BasicQueenSolver{
 
             //}
         }
-        System.out.println(queens);
+        //System.out.println(queens);
         System.out.println(board);
     }
 
