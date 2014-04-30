@@ -1,21 +1,27 @@
 public class TextUI {
-    private static final int MAXROUNDS = 10;
-    private static final String PLAYER = "Chris";
-    private static final String FILE = "dummy.csv";
+    private static final int STDMAXROUNDS = 10;
+    private static final String STDPLAYER = "Chris";
+    private static final String STDFILE = "dummy.csv";
 
     private IStatisticController controller;
+    private int maxrounds;
+    private String player;
 
-    public TextUI(IStatisticController controller){
+    public TextUI(IStatisticController controller, String player, int maxrounds){
         this.controller = controller;
-        //this.rounds = controller.getNumberOfQuestions() < rounds ? controller.getNumberOfQuestions() : rounds;
+        this.player = player;
+        this.maxrounds = maxrounds;
+    }
+    public TextUI(String filename, String player, int maxrounds){
+        this(new SimpleController(IO.readQuestions(filename)), player, maxrounds);
     }
     public TextUI(){
-        this(new SimpleController(IO.readQuestions(FILE)));
+        this(new SimpleController(IO.readQuestions(STDFILE)),STDPLAYER, STDMAXROUNDS);
     }
 
     public void playGame(){
-        int maxRounds = controller.getNumberOfQuestions() < MAXROUNDS ? controller.getNumberOfQuestions() : MAXROUNDS;
-        for(int rounds = 1; rounds <= maxRounds; rounds++){
+        maxrounds = controller.getNumberOfQuestions() < maxrounds ? controller.getNumberOfQuestions() : maxrounds;
+        for(int rounds = 1; rounds <= maxrounds; rounds++){
             System.out.println("\n\nRunde " + rounds);
             Question question = controller.getQuestion();
             System.out.println(question.getQuestion());
@@ -39,6 +45,6 @@ public class TextUI {
         }
         System.out.println("\n\nRichtige Antworten:\t" + controller.getRightAnswers());
         System.out.println("Falsche Antworten:\t" + controller.getWrongAnswers());
-        IO.saveResult(controller, PLAYER);
+        IO.saveResult(controller, player);
     }
 }
