@@ -24,9 +24,10 @@ public class IO {
                     continue;
                 }
                 try {
-                    solution = Integer.parseInt(line[5]);
+                    solution = Integer.parseInt(line[5].trim());
                 } catch (Exception e){
                     // malformed entry
+                    e.printStackTrace();
                     continue;
                 }
                 questions.add(new Question(line[0], Arrays.copyOfRange(line, 1, 5), solution));
