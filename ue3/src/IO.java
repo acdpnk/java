@@ -19,9 +19,12 @@ public class IO {
 
             while((l = br.readLine()) != null ){
                 String[] line = l.split(",");
-                if (Arrays.asList(line).size() != 6){
+                if (line.length != 6){
                     // malformed entry
                     continue;
+                }
+                for(int i=0; i<line.length; i++){
+                    line[i] = line[i].trim();
                 }
                 try {
                     solution = Integer.parseInt(line[5].trim());
@@ -52,13 +55,13 @@ public class IO {
         BufferedWriter bw = null;
 
         try {
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), "utf-8"));
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename)));
 
             bw.write("Player Name: " + playername);
             bw.newLine();
-            bw.write("Richtige Antworten: " + controller.getRightAnswers());
+            bw.write("Richtige Antworten:\t" + controller.getRightAnswers());
             bw.newLine();
-            bw.write("Falsche Antworten: " + controller.getWrongAnswers());
+            bw.write("Falsche Antworten:\t" + controller.getWrongAnswers());
 
             bw.newLine();
             bw.newLine();

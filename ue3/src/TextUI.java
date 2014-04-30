@@ -29,7 +29,7 @@ public class TextUI {
                     choice = new java.util.Scanner(System.in).nextInt();
                     System.out.println(controller.addDataSet(question, question.getAnswers()[choice]));
                 } catch (Exception e){
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
                 if(choice >= 0 && choice <= 3){
                     break;
@@ -37,8 +37,8 @@ public class TextUI {
                 System.out.println("Bitte wählen Sie eine Zahl zwischen 0 und 3:");
             }
         }
-        System.out.println("\n\nRichtig:\t" + controller.getRightAnswers());
-        System.out.println("Falsch:\t" + controller.getWrongAnswers());
+        System.out.println("\n\nRichtige Antworten:\t" + controller.getRightAnswers());
+        System.out.println("Falsche Antworten:\t" + controller.getWrongAnswers());
         IO.saveResult(controller, PLAYER);
     }
 }
