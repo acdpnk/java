@@ -1,9 +1,13 @@
+package control;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Collections;
 import java.util.Iterator;
+
+import model.Question;
 
 public class SimpleController implements IStatisticController {
     private List<Question> questions;

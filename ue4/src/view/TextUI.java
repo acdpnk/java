@@ -1,3 +1,8 @@
+package view;
+
+import model.*;
+import control.*;
+
 public class TextUI {
     private static final int STDMAXROUNDS = 10;
     private static final String STDPLAYER = "Chris";
