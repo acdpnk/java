@@ -28,57 +28,57 @@ public class SettingsPanel extends JPanel{
     private int rounds = STD_NUMBER_OF_ROUNDS;
 
     public SettingsPanel(int stdNumberOfRounds){
-        this.roundsLabel = new JLabel("Number of Rounds per Game:");
-        this.roundsField = new JTextField(Integer.toString(stdNumberOfRounds), 3);
+        roundsLabel = new JLabel("Number of Rounds per Game:");
+        roundsField = new JTextField(Integer.toString(stdNumberOfRounds), 3);
 
-        this.playerLabel = new JLabel("Player Name:");
-        this.playerField = new JTextField(12);
+        playerLabel = new JLabel("Player Name:");
+        playerField = new JTextField(12);
 
-        this.fileLabel = new JLabel("No Question File selected.");
-        this.chooseFileButton = new JButton("Choose a Question File");
+        fileLabel = new JLabel("No Question File selected.");
+        chooseFileButton = new JButton("Choose a Question File");
 
-        this.goButton = new JButton("Go!");
-        this.cancelButton = new JButton("Cancel");
+        goButton = new JButton("Go!");
+        cancelButton = new JButton("Cancel");
 
-        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        this.playerPanel = new JPanel();
-        this.playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.LINE_AXIS));
-        this.playerPanel.add(playerLabel);
-        this.playerPanel.add(Box.createHorizontalGlue());
-        this.playerPanel.add(playerField);
-        this.add(playerPanel);
+        playerPanel = new JPanel();
+        playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.LINE_AXIS));
+        playerPanel.add(playerLabel);
+        playerPanel.add(Box.createHorizontalGlue());
+        playerPanel.add(playerField);
+        add(playerPanel);
 
-        this.roundsPanel = new JPanel();
-        this.roundsPanel.setLayout(new BoxLayout(roundsPanel, BoxLayout.LINE_AXIS));
-        this.roundsPanel.add(roundsLabel);
-        this.playerPanel.add(Box.createHorizontalGlue());
-        this.roundsPanel.add(roundsField);
-        this.add(roundsPanel);
+        roundsPanel = new JPanel();
+        roundsPanel.setLayout(new BoxLayout(roundsPanel, BoxLayout.LINE_AXIS));
+        roundsPanel.add(roundsLabel);
+        playerPanel.add(Box.createHorizontalGlue());
+        roundsPanel.add(roundsField);
+        add(roundsPanel);
 
-        this.filePanel = new JPanel();
-        this.filePanel.setLayout(new BoxLayout(filePanel, BoxLayout.LINE_AXIS));
-        this.filePanel.add(fileLabel);
-        this.filePanel.add(chooseFileButton);
-        this.add(filePanel);
+        filePanel = new JPanel();
+        filePanel.setLayout(new BoxLayout(filePanel, BoxLayout.LINE_AXIS));
+        filePanel.add(fileLabel);
+        filePanel.add(chooseFileButton);
+        add(filePanel);
 
-        this.goPanel = new JPanel();
-        this.goPanel.setLayout(new BoxLayout(goPanel, BoxLayout.LINE_AXIS));
-        this.goPanel.add(cancelButton);
-        this.goPanel.add(goButton);
-        this.add(goPanel);
+        goPanel = new JPanel();
+        goPanel.setLayout(new BoxLayout(goPanel, BoxLayout.LINE_AXIS));
+        goPanel.add(cancelButton);
+        goPanel.add(goButton);
+        add(goPanel);
 
-        this.playerField.setColumns(12);
-        this.roundsField.setColumns(3);
-        this.setVisible(true);
+        playerField.setColumns(12);
+        roundsField.setColumns(3);
+        setVisible(true);
 
-        this.goButton.addActionListener(new ActionListener(){
+        goButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ae){
 
             }
         });
 
-        this.chooseFileButton.addActionListener(new ActionListener(){
+        chooseFileButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                 JFileChooser chooser = new JFileChooser();
                 chooser.showOpenDialog(filePanel);
