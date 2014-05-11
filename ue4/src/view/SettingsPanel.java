@@ -88,6 +88,7 @@ public class SettingsPanel extends JPanel{
                 }
                 fileLabel.setText(file.getName());
                 questionFile = file.getPath();
+                System.out.println(questionFile);
             }
         });
 
@@ -97,4 +98,22 @@ public class SettingsPanel extends JPanel{
         this(STD_NUMBER_OF_ROUNDS);
     }
 
+    boolean checkReady(){
+        if (questionFile == null){
+            return false;
+        }
+        if (playerField.getText().equals("")){
+            return false;
+        }
+        try {
+            rounds = Integer.parseInt(roundsField.getText());
+        } catch(Exception e) {
+            return false;
+        }
+        if (rounds <= 0 ){
+            return false;
+        }
+
+        return true;
+    }
 }
