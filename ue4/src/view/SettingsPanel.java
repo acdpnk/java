@@ -23,7 +23,8 @@ public class SettingsPanel extends JPanel{
     private JLabel playerLabel, roundsLabel, fileLabel;
     private JPanel playerPanel, roundsPanel, filePanel, goPanel;
     private JTextField playerField, roundsField;
-    private JButton chooseFileButton, goButton, cancelButton;
+    private JButton chooseFileButton;
+    public  JButton goButton, cancelButton; // sick and tired of writing pointless getters
     private ActionListener supervisor;
 
     // actual data
@@ -31,8 +32,7 @@ public class SettingsPanel extends JPanel{
     private String player = "";
     private int rounds = STD_NUMBER_OF_ROUNDS;
 
-    public SettingsPanel(ActionListener supervisor, String stdPlayerName, int stdNumberOfRounds){
-        this.supervisor = supervisor;
+    public SettingsPanel(String stdPlayerName, int stdNumberOfRounds){
         roundsLabel = new JLabel("Number of Rounds per Game:");
         roundsField = new JTextField(Integer.toString(stdNumberOfRounds), 3);
         roundsField.getDocument().addDocumentListener(updateListener);
@@ -45,11 +45,9 @@ public class SettingsPanel extends JPanel{
         chooseFileButton = new JButton("Choose a Question File");
 
         goButton = new JButton("Go!");
-        goButton.addActionListener(supervisor);
         goButton.setEnabled(false);
 
         cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(supervisor);
 
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
@@ -100,11 +98,11 @@ public class SettingsPanel extends JPanel{
 
 
     }
-    public SettingsPanel(ActionListener supervisor){
-        this(supervisor, STD_PLAYERNAME, STD_NUMBER_OF_ROUNDS);
+    public SettingsPanel(){
+        this(STD_PLAYERNAME, STD_NUMBER_OF_ROUNDS);
     }
-    public SettingsPanel(ActionListener supervisor, int stdNumberOfRounds){
-        this(supervisor, STD_PLAYERNAME, stdNumberOfRounds);
+    public SettingsPanel(int stdNumberOfRounds){
+        this(STD_PLAYERNAME, stdNumberOfRounds);
     }
 
     private boolean checkReady(){
@@ -140,4 +138,9 @@ public class SettingsPanel extends JPanel{
             goButton.setEnabled(checkReady());
         }
     };
+
+    public void addSupervisor(ActionListener supervisor){
+        this.goButton.addActionListener(supervisor);
+        this.cancelButton.addActionListener(supervisor);
+    }
 }

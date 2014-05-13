@@ -9,11 +9,13 @@ public class Test{
         final JPanel mainpanel = new JPanel();
         final JPanel secondpanel = new JPanel();
 
+        final SettingsPanel settingspanel = new SettingsPanel();
+
         ActionListener supervisor = new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                 if (ae.getSource() instanceof JButton){
                     JButton source = (JButton) ae.getSource();
-                    if( ! source.getText().equals("Go!")){return;}
+                    if(! (source == settingspanel.goButton )){return;}
                     mainframe.remove(mainpanel);
                     mainframe.add(secondpanel);
                     mainframe.pack();
@@ -21,7 +23,7 @@ public class Test{
             }
         };
 
-        JPanel settingspanel = new SettingsPanel(supervisor);
+        settingspanel.addSupervisor(supervisor);
 
         mainframe.add(mainpanel);
         mainpanel.add(settingspanel);
