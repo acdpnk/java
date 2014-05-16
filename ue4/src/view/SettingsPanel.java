@@ -25,14 +25,17 @@ public class SettingsPanel extends JPanel{
     private JTextField playerField, roundsField;
     private JButton chooseFileButton;
     public  JButton goButton, cancelButton; // sick and tired of writing pointless getters
-    private ActionListener supervisor;
+    //private ActionListener supervisor;
 
     // actual data
     private String questionFile = null;
     private String player = "";
     private int rounds = STD_NUMBER_OF_ROUNDS;
 
-    public SettingsPanel(String stdPlayerName, int stdNumberOfRounds){
+    private final FancyUI ui;
+
+    public SettingsPanel(FancyUI ui, String stdPlayerName, int stdNumberOfRounds){
+        this.ui = ui;
         roundsLabel = new JLabel("Number of Rounds per Game:");
         roundsField = new JTextField(Integer.toString(stdNumberOfRounds), 3);
         roundsField.getDocument().addDocumentListener(updateListener);
@@ -46,8 +49,13 @@ public class SettingsPanel extends JPanel{
 
         goButton = new JButton("Go!");
         goButton.setEnabled(false);
+        goButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae){
+                startGame();
+            }
+        });
 
-        cancelButton = new JButton("Cancel");
+        //cancelButton = new JButton("Cancel");
 
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
@@ -73,7 +81,7 @@ public class SettingsPanel extends JPanel{
 
         goPanel = new JPanel();
         goPanel.setLayout(new BoxLayout(goPanel, BoxLayout.LINE_AXIS));
-        goPanel.add(cancelButton);
+        //goPanel.add(cancelButton);
         goPanel.add(goButton);
         add(goPanel);
 
@@ -98,11 +106,11 @@ public class SettingsPanel extends JPanel{
 
 
     }
-    public SettingsPanel(){
-        this(STD_PLAYERNAME, STD_NUMBER_OF_ROUNDS);
+    public SettingsPanel(FancyUI ui){
+        this(ui, STD_PLAYERNAME, STD_NUMBER_OF_ROUNDS);
     }
-    public SettingsPanel(int stdNumberOfRounds){
-        this(STD_PLAYERNAME, stdNumberOfRounds);
+    public SettingsPanel(FancyUI ui, int stdNumberOfRounds){
+        this(ui, STD_PLAYERNAME, stdNumberOfRounds);
     }
 
     private boolean checkReady(){
@@ -139,8 +147,12 @@ public class SettingsPanel extends JPanel{
         }
     };
 
-    public void addSupervisor(ActionListener supervisor){
-        this.goButton.addActionListener(supervisor);
-        this.cancelButton.addActionListener(supervisor);
+    //public void addSupervisor(ActionListener supervisor){
+        //this.goButton.addActionListener(supervisor);
+        //this.cancelButton.addActionListener(supervisor);
+    //}
+    //
+    private void startGame(){
+        ui.startGame(questionFile, roundsField.getText(), playerField.getText());
     }
 }

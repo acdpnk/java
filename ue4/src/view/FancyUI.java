@@ -2,19 +2,90 @@ package view;
 
 import model.*;
 import control.*;
-
+import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
 
-public class FancyUI implements ActionListener{
-    private JFrame mainframe = new JFrame();
-    private JPanel mainpanel = new JPanel();
+public class FancyUI {
+    private static final int STDMAXROUNDS = 10;
+    private static final String STDPLAYER = "name";
+    private static final String STDFILE = "dummy.csv";
 
+    //private IStatisticController controller;
+    //private int maxrounds;
+    //private String player;
 
-    @Override
-    public void actionPerformed(ActionEvent ae){
+    // ui elements
+    private JFrame frame;
+    private SettingsPanel settingspanel;
+    private QuestionPanel questionpanel;
+    //private JMenuBar menubar;
+    //private ActionListener supervisor;
 
+    //public FancyUI(IStatisticController controller, String player, int maxrounds){
+        //this.controller = controller;
+        //this.player = player;
+        //this.maxrounds = maxrounds;
+    //}
+    //public FancyUI(String filename, String player, int maxrounds){
+        //this(new SimpleController(IO.readQuestions(filename)), player, maxrounds);
+    //}
+    //public FancyUI(){
+        //this(new SimpleController(IO.readQuestions(STDFILE)),STDPLAYER, STDMAXROUNDS);
+    //}
+    public FancyUI(){
+        this.frame = new JFrame();
+        this.questionpanel = new QuestionPanel();
+        this.SettingsPanel = new SettingsPanel(this);
+        //this.supervisor = new ActionListener(){
+            //public void actionPerformed(ActionEvent ae){
+                //if (ae.source == settingspanel.goButton){
+                    //this.controller = new SimpleController(
+                                        //IO.readQuestions(
+                                        //settingspanel.getQuestionFile()));
+
+                //}
+            //}
+        //};
+        frame.add(settingspanel);
+        frame.setVisible(true);
     }
 
-    private SettingsPanel settingspanel = new SettingsPanel(this);
+    public void startGame(String questionFile, String player, int maxrounds){
+        IStatisticController controller = new SimpleController(IO.readQuestions(questionFile));
+        maxrounds = controller.getNumberOfQuestions() < maxrounds ? controller.getNumberOfQuestions() : maxrounds;
+        frame.remove(settingspanel);
+        frame.add(questionpanel);
+        questionpanel.ask(controller.getQuestion());
+
+
+        //for(int rounds = 1; rounds <= maxrounds; rounds++){
+            //System.out.println("\n\nRunde " + rounds);
+            //Question question = controller.getQuestion();
+            //System.out.println(question.getQuestion());
+            //for(int i=0; i<4; i++){
+                //System.out.println("\t" + i + ") " + question.getAnswers()[i]);
+            //}
+            //System.out.println("\nBitte wählen Sie eine Antwort: ");
+            //while(true){
+                //int choice = -1;
+                //try{
+                    //choice = new java.util.Scanner(System.in).nextInt();
+                    //System.out.println(controller.addDataSet(question, question.getAnswers()[choice]));
+                //} catch (Exception e){
+                    ////e.printStackTrace();
+                //}
+                //if(choice >= 0 && choice <= 3){
+                    //break;
+                //}
+                //System.out.println("Bitte wählen Sie eine Zahl zwischen 0 und 3:");
+            //}
+        //}
+        //System.out.println("\n\nRichtige Antworten:\t" + controller.getRightAnswers());
+        //System.out.println("Falsche Antworten:\t" + controller.getWrongAnswers());
+        IO.saveResult(controller, player);
+    }
+    public void answer(Question question, String givenAnswer)
+    {
+        controller.addDataSet(question, givenAnswer);
+    }
 }
