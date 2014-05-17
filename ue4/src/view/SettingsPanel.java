@@ -153,6 +153,6 @@ public class SettingsPanel extends JPanel{
     //}
     //
     private void startGame(){
-        ui.startGame(questionFile, roundsField.getText(), playerField.getText());
+        ui.startGame(questionFile, playerField.getText(), Integer.parseInt(roundsField.getText()));
     }
 }

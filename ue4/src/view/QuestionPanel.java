@@ -1,12 +1,13 @@
+package view;
 import java.awt.event.*;
 import javax.swing.*;
+import java.awt.GridLayout;
 import model.*;
 
 
 public class QuestionPanel extends JPanel
 {
     public Question question;
-    private final FancyUI ui;
     public JButton answer0, answer1, answer2, answer3;
     private JButton[] buttons;
     private JPanel buttonPanel;
@@ -15,10 +16,12 @@ public class QuestionPanel extends JPanel
 
     public QuestionPanel(FancyUI ui)
     {
-        this.ui = ui;
+
+        final FancyUI fui = ui;
         questionLabel = new JLabel("question");
         this.add(questionLabel);
         buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(2,2));
         this.add(buttonPanel);
 
         buttons = new JButton[4];
@@ -35,8 +38,9 @@ public class QuestionPanel extends JPanel
         {
             public void actionPerformed(ActionEvent ae)
             {
-                ui.answer(question, ((JButton) ae.getSource()).getText());
+                fui.answer(question, ((JButton) ae.getSource()).getText());
 
+                System.out.println("meep");
             }
         };
 
