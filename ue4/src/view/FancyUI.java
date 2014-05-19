@@ -18,91 +18,75 @@ public class FancyUI {
     private JFrame frame;
     private SettingsPanel settingspanel;
     private QuestionPanel questionpanel;
-    //private JMenuBar menubar;
-    //private ActionListener supervisor;
+    private ResultPanel   resultpanel;
 
-    //public FancyUI(IStatisticController controller, String player, int maxrounds){
-        //this.controller = controller;
-        //this.player = player;
-        //this.maxrounds = maxrounds;
-    //}
-    //public FancyUI(String filename, String player, int maxrounds){
-        //this(new SimpleController(IO.readQuestions(filename)), player, maxrounds);
-    //}
-    //public FancyUI(){
-        //this(new SimpleController(IO.readQuestions(STDFILE)),STDPLAYER, STDMAXROUNDS);
-    //}
     public FancyUI(){
+        try
+        {
+            // i hate that i have to do this, but apparently this is the
+            // only way to make the oh-so-platform-agnostic java
+            // behave consistent over multiple operating systems without
+            // bending over backwards. yes, it's butt-ugly. go figure.
+            UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         this.frame = new JFrame();
         this.questionpanel = new QuestionPanel(this);
         this.settingspanel = new SettingsPanel(this);
-        //this.supervisor = new ActionListener(){
-            //public void actionPerformed(ActionEvent ae){
-                //if (ae.source == settingspanel.goButton){
-                    //this.controller = new SimpleController(
-                                        //IO.readQuestions(
-                                        //settingspanel.getQuestionFile()));
+        this.resultpanel   = new ResultPanel(this);
 
-                //}
-            //}
-        //};
-        frame.add(settingspanel);
-        frame.pack();
+        setup();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+    public void setup()
+    {
+        // go into setup mode, with settings displayed
+        frame.getContentPane().removeAll();
+        frame.add(settingspanel);
+        frame.pack();
+    }
 
-    public void startGame(String questionFile, String player, int maxrounds){
+    public void startGame(String questionFile, String player, int maxrounds)
+    {
         controller = new SimpleController(IO.readQuestions(questionFile));
         this.maxrounds = controller.getNumberOfQuestions() < maxrounds ? controller.getNumberOfQuestions() : maxrounds;
         this.player = player;
         frame.remove(settingspanel);
         frame.add(questionpanel);
-        frame.pack();
+        frame.setSize(700,350);
         questionpanel.ask(controller.getQuestion());
 
-
-        //for(int rounds = 1; rounds <= maxrounds; rounds++){
-            //System.out.println("\n\nRunde " + rounds);
-            //Question question = controller.getQuestion();
-            //System.out.println(question.getQuestion());
-            //for(int i=0; i<4; i++){
-                //System.out.println("\t" + i + ") " + question.getAnswers()[i]);
-            //}
-            //System.out.println("\nBitte wählen Sie eine Antwort: ");
-            //while(true){
-                //int choice = -1;
-                //try{
-                    //choice = new java.util.Scanner(System.in).nextInt();
-                    //System.out.println(controller.addDataSet(question, question.getAnswers()[choice]));
-                //} catch (Exception e){
-                    ////e.printStackTrace();
-                //}
-                //if(choice >= 0 && choice <= 3){
-                    //break;
-                //}
-                //System.out.println("Bitte wählen Sie eine Zahl zwischen 0 und 3:");
-            //}
-        //}
-        //System.out.println("\n\nRichtige Antworten:\t" + controller.getRightAnswers());
-        //System.out.println("Falsche Antworten:\t" + controller.getWrongAnswers());
     }
     public void answer(Question question, String givenAnswer)
+    // gets called by the QuestionPanel
     {
-        System.out.println(maxrounds);
         controller.addDataSet(question, givenAnswer);
         maxrounds--;
-        if (maxrounds > 0)
-        {
-            questionpanel.ask(controller.getQuestion());
-        }
-        else
-        {
-            endGame();
-        }
     }
-    private void endGame()
+    public void endGame()
+    //gets called by the QuestionPanel
     {
         IO.saveResult(controller, player);
-
+        frame.remove(questionpanel);
+        frame.add(resultpanel);
+        resultpanel.display(player, controller);
+        frame.pack();
+    }
+    public Question getQuestion()
+    {
+        return controller.getQuestion();
+    }
+    public IStatisticController getController()
+    {
+        return this.controller;
+    }
+    public int getMaxRounds()
+    {
+        return maxrounds;
     }
 }

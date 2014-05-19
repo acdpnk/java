@@ -26,4 +26,8 @@ public class Question {
         }
         return false;
     }
+
+    public int getSolution(){
+        return this.solution;
+    }
 }

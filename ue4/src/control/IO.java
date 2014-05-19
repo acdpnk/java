@@ -54,8 +54,7 @@ public class IO {
     }
 
 
-    public static void saveResult(IStatisticController controller, String playername){
-        String filename = playername + "_" + System.currentTimeMillis();
+    public static void saveResultAs(String filename, IStatisticController controller, String playername){
         BufferedWriter bw = null;
 
         try {
@@ -89,5 +88,11 @@ public class IO {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void saveResult(IStatisticController controller, String playername)
+    {
+        String filename = playername + "_" + System.currentTimeMillis();
+        saveResultAs(filename, controller, playername);
     }
 }

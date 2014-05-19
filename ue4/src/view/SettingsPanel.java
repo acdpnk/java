@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JFrame;
 import java.io.File;
 
@@ -25,9 +27,7 @@ public class SettingsPanel extends JPanel{
     private JTextField playerField, roundsField;
     private JButton chooseFileButton;
     public  JButton goButton, cancelButton; // sick and tired of writing pointless getters
-    //private ActionListener supervisor;
 
-    // actual data
     private String questionFile = null;
     private String player = "";
     private int rounds = STD_NUMBER_OF_ROUNDS;
@@ -54,8 +54,6 @@ public class SettingsPanel extends JPanel{
                 startGame();
             }
         });
-
-        //cancelButton = new JButton("Cancel");
 
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
@@ -93,6 +91,9 @@ public class SettingsPanel extends JPanel{
         chooseFileButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                 JFileChooser chooser = new JFileChooser();
+                FileFilter filter = new FileNameExtensionFilter("CSV file", new String[] {"csv"});
+                chooser.setFileFilter(filter);
+                chooser.addChoosableFileFilter(filter);
                 chooser.showOpenDialog(filePanel);
                 File file = chooser.getSelectedFile();
                 if(file == null){
@@ -114,6 +115,8 @@ public class SettingsPanel extends JPanel{
     }
 
     private boolean checkReady(){
+        // gets called by document listener added to all textfields. checks
+        // if entries are valid.
         if (questionFile == null){
             return false;
         }
@@ -131,9 +134,7 @@ public class SettingsPanel extends JPanel{
 
         return true;
     }
-    //private void update(){
-        //goButton.setEnabled(checkReady());
-    //}
+
 
     private DocumentListener updateListener = new DocumentListener(){
         public void changedUpdate(DocumentEvent de){
@@ -147,11 +148,6 @@ public class SettingsPanel extends JPanel{
         }
     };
 
-    //public void addSupervisor(ActionListener supervisor){
-        //this.goButton.addActionListener(supervisor);
-        //this.cancelButton.addActionListener(supervisor);
-    //}
-    //
     private void startGame(){
         ui.startGame(questionFile, playerField.getText(), Integer.parseInt(roundsField.getText()));
     }
