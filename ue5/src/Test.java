@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import view.PitPane;
 
 public class Test
 {
