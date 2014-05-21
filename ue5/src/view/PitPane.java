@@ -21,14 +21,21 @@ public class PitPane extends JPanel implements ActionListener
         {
             pits[i] = new JButton(Integer.toString(i));
             pits[i].addActionListener(this);
-            if (! (i % 7 == 0))
-            {
-                centerPane.add(pits[i]);
-            }
         }
 
-        add(pits[0], BorderLayout.LINE_START);
-        add(pits[7], BorderLayout.LINE_END);
+        for (int i=12; i>6; i--)
+        {
+            centerPane.add(pits[i]);
+        }
+        for (int i=0; i<6; i++)
+        {
+            centerPane.add(pits[i]);
+        }
+
+        JButton kalaha1 = pits[6];
+        JButton kalaha2 = pits[13];
+        add(kalaha2, BorderLayout.LINE_START);
+        add(kalaha1, BorderLayout.LINE_END);
         add(centerPane, BorderLayout.CENTER);
     }
 
