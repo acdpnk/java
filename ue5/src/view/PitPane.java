@@ -5,21 +5,22 @@ import java.awt.event.*;
 
 public class PitPane extends JPanel implements ActionListener
 {
-    private JButton[] pits;
+    private Pit[] pits;
 
     public PitPane()
     {
         super();
         setSize(200,800);
         setLayout(new BorderLayout());
-        pits = new JButton[14];
+        pits = new Pit[14];
 
         JPanel centerPane = new JPanel();
         centerPane.setLayout(new GridLayout(2,6));
 
         for (int i=0; i<14; i++)
         {
-            pits[i] = new JButton(Integer.toString(i));
+            pits[i] = new Pit(i);
+            pits[i].setText(Integer.toString(i));
             pits[i].addActionListener(this);
         }
 
@@ -32,8 +33,8 @@ public class PitPane extends JPanel implements ActionListener
             centerPane.add(pits[i]);
         }
 
-        JButton kalaha1 = pits[6];
-        JButton kalaha2 = pits[13];
+        Pit kalaha1 = pits[6];
+        Pit kalaha2 = pits[13];
         add(kalaha2, BorderLayout.LINE_START);
         add(kalaha1, BorderLayout.LINE_END);
         add(centerPane, BorderLayout.CENTER);
@@ -42,6 +43,6 @@ public class PitPane extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent ae)
     {
-        System.out.println(((JButton) ae.getSource()).getText());
+        System.out.println(((Pit) ae.getSource()).getText());
     }
 }
