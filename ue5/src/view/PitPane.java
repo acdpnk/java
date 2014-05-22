@@ -43,6 +43,6 @@ public class PitPane extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent ae)
     {
-        System.out.println(((Pit) ae.getSource()).getText());
+        System.out.println(((Pit) ae.getSource()).getID());
     }
 }
