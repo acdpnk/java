@@ -2,5 +2,5 @@ package model;
 
 public enum PlayerType
 {
-    KI, HUMAN;
+    AI, HUMAN;
 }
