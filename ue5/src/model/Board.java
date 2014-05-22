@@ -24,5 +24,12 @@ public class Board extends Observable
         notifyObservers(pit % NUM_PITS);
     }
 
+    public void putSeed(int pit)
+    {
+        pits[pit % NUM_PITS] = pits[pit % NUM_PITS] + 1;
+        setChanged();
+        notifyObservers(pit % NUM_PITS);
+    }
+
 
 }

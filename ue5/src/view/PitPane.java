@@ -5,14 +5,17 @@ import java.awt.event.*;
 import java.util.Observer;
 import java.util.Observable;
 import model.Board;
+import control.KalahaController;
 
 public class PitPane extends JPanel implements ActionListener, Observer
 {
     private Pit[] pits;
+    private KalahaController controller;
 
-    public PitPane()
+    public PitPane(KalahaController controller)
     {
         super();
+        this.controller = controller;
         setSize(200,800);
         setLayout(new BorderLayout());
         pits = new Pit[14];
@@ -46,7 +49,11 @@ public class PitPane extends JPanel implements ActionListener, Observer
     @Override
     public void actionPerformed(ActionEvent ae)
     {
-        System.out.println(((Pit) ae.getSource()).getID());
+        int sourceID = ((Pit) ae.getSource()).getID();
+        System.out.println(sourceID);
+
+        controller.pitChosen(sourceID);
+
     }
 
     @Override
