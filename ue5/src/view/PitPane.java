@@ -2,8 +2,11 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Observer;
+import java.util.Observable;
+import model.Board;
 
-public class PitPane extends JPanel implements ActionListener
+public class PitPane extends JPanel implements ActionListener, Observer
 {
     private Pit[] pits;
 
@@ -44,5 +47,14 @@ public class PitPane extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent ae)
     {
         System.out.println(((Pit) ae.getSource()).getID());
+    }
+
+    @Override
+    public void update(Observable o, Object arg)
+    {
+        int pit = (Integer) arg;
+        int seeds = ((Board) o).getSeeds(pit);
+
+        pits[pit].setText(Integer.toString(seeds));
     }
 }

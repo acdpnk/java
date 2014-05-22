@@ -2,6 +2,7 @@ package control;
 
 import javax.swing.JFrame;
 import view.*;
+import model.*;
 
 public class KalahaController
 {
@@ -18,6 +19,12 @@ public class KalahaController
         testframe.add(pitpane);
         testframe.setSize(800,200);
         testframe.setVisible(true);
+
+        Board board = new Board();
+        board.addObserver(pitpane);
+
+        board.setSeeds(7,23);
+        board.setSeeds(8,42);
 
 
     }

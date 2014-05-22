@@ -1,4 +1,8 @@
-public class Board
+package model;
+
+import java.util.Observable;
+
+public class Board extends Observable
 {
     private int[] pits;
 
@@ -15,5 +19,9 @@ public class Board
     public void setSeeds(int pit, int seeds)
     {
         pits[pit] = seeds;
+        setChanged();
+        notifyObservers(pit);
     }
+
+
 }
