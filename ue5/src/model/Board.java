@@ -31,5 +31,9 @@ public class Board extends Observable
         notifyObservers(pit % NUM_PITS);
     }
 
+    public int getOpposingPit(int pit)
+    {
+        return 12 - (pit % NUM_PITS);
+    }
 
 }

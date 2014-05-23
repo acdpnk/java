@@ -50,7 +50,7 @@ public class PitPane extends JPanel implements ActionListener, Observer
     public void actionPerformed(ActionEvent ae)
     {
         int sourceID = ((Pit) ae.getSource()).getID();
-        System.out.println(sourceID);
+        //System.out.println(sourceID);
 
         controller.pitChosen(sourceID);
 
