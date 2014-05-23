@@ -24,7 +24,7 @@ public class Board extends Observable
 
     public void setActivePlayer(Player player)
     {
-        this.activePlayer = player;
+        activePlayer = player;
     }
 
     public Player getOpponent()
@@ -127,7 +127,7 @@ public class Board extends Observable
         if (endReached())
         {
             System.out.println("END");
-            endGame();
+            clean();
         }
         // if the last seed dropped into the active player's kalaha,
         // they get another move. else, active status goes to the other
@@ -138,7 +138,8 @@ public class Board extends Observable
             System.out.println(activePlayer.getName() + "\'s turn");
         }
 
-        while (activePlayer.getType() == PlayerType.AI)
+        while (activePlayer.getType() == PlayerType.AI &&
+            endReached() == false)
         {
             move(((AI) activePlayer).pickMove(this));
         }
@@ -164,7 +165,7 @@ public class Board extends Observable
         return false;
     }
 
-    private void endGame()
+    private void clean()
     {
         int playerOneSeeds = getSeeds(playerOne.getKalaha());
         int playerTwoSeeds = getSeeds(playerTwo.getKalaha());
