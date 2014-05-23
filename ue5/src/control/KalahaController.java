@@ -33,10 +33,10 @@ public class KalahaController
         playerOne = new Player("foo", Player.ONE);
         playerTwo = new AI(Player.TWO);
 
-        board = new Board();
+        board = new Board(playerOne, playerTwo);
         board.addObserver(pitpane);
 
-        setUpBoard();
+        board.setUp();
 
         activePlayer = playerOne;
         //for (int i=0; i<20; i++)
@@ -48,21 +48,21 @@ public class KalahaController
         //board.setSeeds(0,0);
     }
 
-    private void setUpBoard()
-    {
-        for (int pit : playerOne.getPits())
-        {
-            board.setSeeds(pit,3);
-        }
+    // private void setUpBoard()
+    // {
+    //     for (int pit : playerOne.getPits())
+    //     {
+    //         board.setSeeds(pit,3);
+    //     }
 
-        for (int pit : playerTwo.getPits())
-        {
-            board.setSeeds(pit,3);
-        }
+    //     for (int pit : playerTwo.getPits())
+    //     {
+    //         board.setSeeds(pit,3);
+    //     }
 
-        board.setSeeds(playerOne.getKalaha(),0);
-        board.setSeeds(playerTwo.getKalaha(),0);
-    }
+    //     board.setSeeds(playerOne.getKalaha(),0);
+    //     board.setSeeds(playerTwo.getKalaha(),0);
+    // }
 
     public void pitChosen(int pit)
     {
