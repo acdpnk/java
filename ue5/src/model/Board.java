@@ -13,6 +13,7 @@ public class Board extends Observable
     {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
+        setActivePlayer(playerOne);
         pits = new int[NUM_PITS];
     }
 
@@ -133,14 +134,7 @@ public class Board extends Observable
         // player.
         if (lastSeed % NUM_PITS != activePlayer.getKalaha())
         {
-            if (activePlayer == playerOne)
-            {
-                activePlayer = playerTwo;
-            }
-            else if (activePlayer == playerTwo)
-            {
-                activePlayer = playerOne;
-            }
+            activePlayer = getOpponent();
             System.out.println(activePlayer.getName() + "\'s turn");
         }
 

@@ -35,13 +35,6 @@ public class KalahaController
         board.setActivePlayer(playerOne);
 
 
-        //for (int i=0; i<20; i++)
-        //{
-            //pitChosen(playerTwo.pickMove(board));
-        //}
-
-        //board.setSeeds(5,9);
-        //board.setSeeds(0,0);
     }
 
     public void pitChosen(int pit)
