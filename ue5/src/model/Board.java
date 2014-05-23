@@ -127,15 +127,6 @@ public class Board extends Observable
             System.out.println(activePlayer.getName() + "\'s turn");
         }
 
-        //if (activePlayer == playerOne)
-        //{
-            //activePlayer = playerTwo;
-        //}
-        //else if (activePlayer == playerTwo)
-        //{
-            //activePlayer = playerOne;
-        //}
-
         while (activePlayer.getType() == PlayerType.AI)
         {
             move(((AI) activePlayer).pickMove(this));
