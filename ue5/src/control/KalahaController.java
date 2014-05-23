@@ -37,8 +37,9 @@ public class KalahaController
         board.addObserver(pitpane);
 
         board.setUp();
+        board.setActivePlayer(playerOne);
 
-        activePlayer = playerOne;
+
         //for (int i=0; i<20; i++)
         //{
             //pitChosen(playerTwo.pickMove(board));
@@ -47,22 +48,6 @@ public class KalahaController
         //board.setSeeds(5,9);
         //board.setSeeds(0,0);
     }
-
-    // private void setUpBoard()
-    // {
-    //     for (int pit : playerOne.getPits())
-    //     {
-    //         board.setSeeds(pit,3);
-    //     }
-
-    //     for (int pit : playerTwo.getPits())
-    //     {
-    //         board.setSeeds(pit,3);
-    //     }
-
-    //     board.setSeeds(playerOne.getKalaha(),0);
-    //     board.setSeeds(playerTwo.getKalaha(),0);
-    // }
 
     public void pitChosen(int pit)
     {
@@ -73,7 +58,7 @@ public class KalahaController
         }
 
         // if the pit doesn't belong to the active player, it can't be chosen.
-        if (Arrays.binarySearch(activePlayer.getPits(), pit) < 0)
+        if (Arrays.binarySearch(board.getActivePlayer().getPits(), pit) < 0)
         {
             return;
         }
@@ -83,99 +68,101 @@ public class KalahaController
         {
             return;
         }
-
-        System.out.println(activePlayer.getName() + ": " + pit);
-
-        int seeds = board.getSeeds(pit);
-        board.setSeeds(pit,0);
-        for (int i=1; i<=seeds; i++)
-        {
-            board.putSeed(pit + i);
-        }
-
-        // if the last seed is dropped into an empty pit belonging to the
-        // active player, capture all seeds in the opposing pit
-        int lastSeed = pit + seeds;
-        if (board.getSeeds(lastSeed) == 1 &&
-            Arrays.binarySearch(activePlayer.getPits(), lastSeed % board.NUM_PITS) >= 0)
-        {
-            int capturedSeeds = board.getSeeds(board.getOpposingPit(lastSeed));
-            board.setSeeds(lastSeed, capturedSeeds+1);
-            board.setSeeds(board.getOpposingPit(lastSeed),0);
-        }
-
-        if (endReached(board))
-        {
-            System.out.println("END");
-            endGame(board);
-        }
-        // if the last seed dropped into the active player's kalaha,
-        // they get another move. else, active status goes to the other
-        // player.
-        if (lastSeed % board.NUM_PITS != activePlayer.getKalaha())
-        {
-            if (activePlayer == playerOne)
-            {
-                activePlayer = playerTwo;
-            }
-            else if (activePlayer == playerTwo)
-            {
-                activePlayer = playerOne;
-            }
-            System.out.println(activePlayer.getName() + "\'s turn");
-        }
-
-        //if (activePlayer == playerOne)
-        //{
-            //activePlayer = playerTwo;
-        //}
-        //else if (activePlayer == playerTwo)
-        //{
-            //activePlayer = playerOne;
-        //}
-
-        while (activePlayer.getType() == PlayerType.AI)
-        {
-            pitChosen(((AI) activePlayer).pickMove(board));
-        }
+        board.move(pit);
     }
 
-    private boolean endReached(Board board)
-    {
-        int playerOneSeeds = 0;
-        int playerTwoSeeds = 0;
-        for (int pit : playerOne.getPits())
-        {
-            playerOneSeeds += board.getSeeds(pit);
-        }
-        for (int pit : playerTwo.getPits())
-        {
-            playerTwoSeeds += board.getSeeds(pit);
-        }
+    //     System.out.println(activePlayer.getName() + ": " + pit);
 
-        if (playerOneSeeds == 0 || playerTwoSeeds == 0)
-        {
-            return true;
-        }
-        return false;
-    }
+    //     int seeds = board.getSeeds(pit);
+    //     board.setSeeds(pit,0);
+    //     for (int i=1; i<=seeds; i++)
+    //     {
+    //         board.putSeed(pit + i);
+    //     }
 
-    private void endGame(Board board)
-    {
-        int playerOneSeeds = board.getSeeds(playerOne.getKalaha());
-        int playerTwoSeeds = board.getSeeds(playerTwo.getKalaha());
-        for (int pit : playerOne.getPits())
-        {
-            playerOneSeeds += board.getSeeds(pit);
-            board.setSeeds(pit, 0);
-        }
-        for (int pit : playerTwo.getPits())
-        {
-            playerTwoSeeds += board.getSeeds(pit);
-            board.setSeeds(pit, 0);
-        }
+    //     // if the last seed is dropped into an empty pit belonging to the
+    //     // active player, capture all seeds in the opposing pit
+    //     int lastSeed = pit + seeds;
+    //     if (board.getSeeds(lastSeed) == 1 &&
+    //         Arrays.binarySearch(activePlayer.getPits(), lastSeed % board.NUM_PITS) >= 0)
+    //     {
+    //         int capturedSeeds = board.getSeeds(board.getOpposingPit(lastSeed));
+    //         board.setSeeds(lastSeed, capturedSeeds+1);
+    //         board.setSeeds(board.getOpposingPit(lastSeed),0);
+    //     }
 
-        board.setSeeds(playerOne.getKalaha(), playerOneSeeds);
-        board.setSeeds(playerTwo.getKalaha(), playerTwoSeeds);
-    }
+    //     if (endReached(board))
+    //     {
+    //         System.out.println("END");
+    //         endGame(board);
+    //     }
+    //     // if the last seed dropped into the active player's kalaha,
+    //     // they get another move. else, active status goes to the other
+    //     // player.
+    //     if (lastSeed % board.NUM_PITS != activePlayer.getKalaha())
+    //     {
+    //         if (activePlayer == playerOne)
+    //         {
+    //             activePlayer = playerTwo;
+    //         }
+    //         else if (activePlayer == playerTwo)
+    //         {
+    //             activePlayer = playerOne;
+    //         }
+    //         System.out.println(activePlayer.getName() + "\'s turn");
+    //     }
+
+    //     //if (activePlayer == playerOne)
+    //     //{
+    //         //activePlayer = playerTwo;
+    //     //}
+    //     //else if (activePlayer == playerTwo)
+    //     //{
+    //         //activePlayer = playerOne;
+    //     //}
+
+    //     while (activePlayer.getType() == PlayerType.AI)
+    //     {
+    //         pitChosen(((AI) activePlayer).pickMove(board));
+    //     }
+    // }
+
+    // private boolean endReached(Board board)
+    // {
+    //     int playerOneSeeds = 0;
+    //     int playerTwoSeeds = 0;
+    //     for (int pit : playerOne.getPits())
+    //     {
+    //         playerOneSeeds += board.getSeeds(pit);
+    //     }
+    //     for (int pit : playerTwo.getPits())
+    //     {
+    //         playerTwoSeeds += board.getSeeds(pit);
+    //     }
+
+    //     if (playerOneSeeds == 0 || playerTwoSeeds == 0)
+    //     {
+    //         return true;
+    //     }
+    //     return false;
+    // }
+
+    // private void endGame(Board board)
+    // {
+    //     int playerOneSeeds = board.getSeeds(playerOne.getKalaha());
+    //     int playerTwoSeeds = board.getSeeds(playerTwo.getKalaha());
+    //     for (int pit : playerOne.getPits())
+    //     {
+    //         playerOneSeeds += board.getSeeds(pit);
+    //         board.setSeeds(pit, 0);
+    //     }
+    //     for (int pit : playerTwo.getPits())
+    //     {
+    //         playerTwoSeeds += board.getSeeds(pit);
+    //         board.setSeeds(pit, 0);
+    //     }
+
+    //     board.setSeeds(playerOne.getKalaha(), playerOneSeeds);
+    //     board.setSeeds(playerTwo.getKalaha(), playerTwoSeeds);
+    // }
 }
