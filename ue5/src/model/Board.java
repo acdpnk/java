@@ -26,6 +26,11 @@ public class Board extends Observable
         this.activePlayer = player;
     }
 
+    public Player getOpponent()
+    {
+        return playerOne == activePlayer ? playerTwo : playerOne;
+    }
+
     public int getSeeds(int pit)
     {
         return pits[pit % NUM_PITS];
@@ -92,18 +97,30 @@ public class Board extends Observable
         setSeeds(pit,0);
         for (int i=1; i<=seeds; i++)
         {
-            putSeed(pit + i);
+            // if the pit we'd be putting seeds in is the opponent's kalaha,
+            // skip it instead.
+            if ((pit + i) % NUM_PITS == getOpponent().getKalaha())
+            {
+                seeds++;
+            }
+            else
+            {
+                putSeed(pit + i);
+            }
         }
 
         // if the last seed is dropped into an empty pit belonging to the
         // active player, capture all seeds in the opposing pit
         int lastSeed = pit + seeds;
         if (getSeeds(lastSeed) == 1 &&
-            Arrays.binarySearch(activePlayer.getPits(), lastSeed % NUM_PITS) >= 0)
+            Arrays.binarySearch(activePlayer.getPits(),lastSeed % NUM_PITS)>=0
+            && getSeeds(getOpposingPit(lastSeed)) > 0)
         {
-            int capturedSeeds = getSeeds(getOpposingPit(lastSeed));
-            setSeeds(lastSeed, capturedSeeds+1);
+            int capturedSeeds = getSeeds(getOpposingPit(lastSeed)) + 1;
+            setSeeds(lastSeed, 0);
             setSeeds(getOpposingPit(lastSeed),0);
+            setSeeds(activePlayer.getKalaha(),
+                getSeeds(activePlayer.getKalaha()) + capturedSeeds);
         }
 
         if (endReached())
