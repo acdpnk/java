@@ -25,6 +25,8 @@ public class Board extends Observable
     public void setActivePlayer(Player player)
     {
         activePlayer = player;
+        setChanged();
+        notifyObservers(activePlayer);
     }
 
     public Player getOpponent()

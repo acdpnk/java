@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.Observer;
 import java.util.Observable;
 import model.Board;
+import model.Player;
 import control.KalahaController;
 
 public class PitPane extends JPanel implements ActionListener, Observer
@@ -59,9 +60,12 @@ public class PitPane extends JPanel implements ActionListener, Observer
     @Override
     public void update(Observable o, Object arg)
     {
-        int pit = (Integer) arg;
-        int seeds = ((Board) o).getSeeds(pit);
+        if(!(arg instanceof Player))
+        {
+            int pit = (Integer) arg;
+            int seeds = ((Board) o).getSeeds(pit);
 
-        pits[pit].setText(Integer.toString(seeds));
+            pits[pit].setText(Integer.toString(seeds));
+        }
     }
 }

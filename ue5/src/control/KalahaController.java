@@ -24,7 +24,7 @@ public class KalahaController
         settingspane = new SettingsPane(this);
 
         testframe.add(settingspane);
-        testframe.pack();
+        testframe.setSize(800,200);
         testframe.setVisible(true);
 
 
