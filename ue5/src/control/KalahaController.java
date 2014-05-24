@@ -66,10 +66,9 @@ public class KalahaController extends MouseAdapter implements Observer
         mainframe.repaint();
     }
 
-    public void finalizeGame(Board board)
+    public void finalizeGame(Player winner)
     {
-
-        // TODO
+        kalahapane.declareWinner(winner.getID());
     }
 
     public void pitChosen(int pit)
@@ -94,9 +93,13 @@ public class KalahaController extends MouseAdapter implements Observer
 
             pitpane.setPit(pit, seeds);
         }
-        else
+        else if (! board.endReached())
         {
             kalahapane.setActivePlayer(((Player) arg).getID());
+        }
+        else
+        {
+            finalizeGame((Player) arg);
         }
     }
     @Override

@@ -48,4 +48,19 @@ public class KalahaPane extends JPanel
         }
     }
 
+    public void declareWinner(int winnerID)
+    {
+        playeronelabel.setForeground(Color.BLACK);
+        playertwolabel.setForeground(Color.BLACK);
+
+        if(winnerID == Player.ONE)
+        {
+            setPlayerOne("*** WINNER: " + playeronelabel.getText() + " ***");
+        }
+        if(winnerID == Player.TWO)
+        {
+            setPlayerTwo("*** WINNER: " + playertwolabel.getText() + " ***");
+        }
+    }
+
 }

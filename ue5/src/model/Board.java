@@ -186,5 +186,7 @@ public class Board extends Observable
 
         setSeeds(playerOne.getKalaha(), playerOneSeeds);
         setSeeds(playerTwo.getKalaha(), playerTwoSeeds);
+        setChanged();
+        notifyObservers(playerOneSeeds > playerTwoSeeds ? playerOne : playerTwo);
     }
 }
