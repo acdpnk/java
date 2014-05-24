@@ -7,6 +7,11 @@ public class AI extends Player
         super("Morgan", id, PlayerType.AI);
     }
 
+    public AI(String name, int id)
+    {
+        super(name, id, PlayerType.AI);
+    }
+
     public int pickMove(Board board)
     {
         int choice = getPits()[(int) (Math.random()*6)];
