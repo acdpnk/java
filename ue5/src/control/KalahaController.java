@@ -2,87 +2,86 @@ package control;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.Arrays;
 import java.util.Observer;
 import java.util.Observable;
 import view.*;
 import model.*;
 
-public class KalahaController implements Observer
+public class KalahaController extends MouseAdapter implements Observer
 {
-    private JFrame mainframe;
-    private JPanel mainpane;
-    private JLabel playeronelabel, playertwolabel;
+    private final JFrame mainframe;
+    private KalahaPane kalahapane;
     private PitPane pitpane;
     private SettingsPane settingspane;
     private Board board;
-    private Player playerOne;
-    private Player playerTwo;
-    private Player activePlayer;
 
     public KalahaController()
     {
         mainframe = new JFrame();
-        mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainframe.setLocationRelativeTo(null);
-
-        mainpane = new JPanel();
-        mainframe.add(mainpane);
-
-        mainpane.setLayout(new BorderLayout());
 
         settingspane = new SettingsPane(this);
         pitpane = new PitPane(this);
+        kalahapane = new KalahaPane(this);
 
-        playeronelabel = new JLabel("",SwingConstants.CENTER);
-        playertwolabel = new JLabel("",SwingConstants.CENTER);
+        kalahapane.add(pitpane, BorderLayout.CENTER);
 
-        mainpane.add(settingspane, BorderLayout.CENTER);
-        mainframe.setSize(800,200);
+        mainframe.setSize(800,201);
+        mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainframe.setLocationRelativeTo(null);
+
+        mainframe.add(settingspane);
+        mainframe.repaint();
+
         mainframe.setVisible(true);
 
+        mainframe.validate();
+    }
 
-        // playerOne = new Player("foo", Player.ONE);
-        // playerTwo = new AI(Player.TWO);
-
-        // board = new Board(playerOne, playerTwo);
-        // board.addObserver(pitpane);
-
-        // board.setUp();
-        // board.setActivePlayer(playerOne);
-
+    public void ready()
+    {
+        mainframe.remove(kalahapane);
+        mainframe.add(settingspane, BorderLayout.CENTER);
+        mainframe.repaint();
+        mainframe.validate();
 
     }
 
 
     public void initializeGame(Player playerOne, Player playerTwo)
     {
-        this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
-
-        playeronelabel.setText(playerOne.getName());
-        playertwolabel.setText(playerTwo.getName());
-
-        mainpane.removeAll();
-        mainpane.add(pitpane, BorderLayout.CENTER);
-        mainpane.add(playertwolabel, BorderLayout.PAGE_START);
-        mainpane.add(playeronelabel, BorderLayout.PAGE_END);
-        mainpane.setSize(800,300);
+        kalahapane.setPlayerOne(playerOne.getName());
+        kalahapane.setPlayerTwo(playerTwo.getName());
 
         board = new Board(playerOne, playerTwo);
         board.addObserver(this);
         board.setUp();
+
+        mainframe.remove(settingspane);
+        mainframe.add(kalahapane);
+
         board.setActivePlayer(playerOne);
+        mainframe.validate();
+        mainframe.repaint();
     }
 
     public void finalizeGame(Board board)
     {
+
         // TODO
     }
 
     public void pitChosen(int pit)
     {
-        board.move(pit);
+        if(board.endReached())
+        {
+            ready();
+        }
+        else
+        {
+            board.move(pit);
+        }
     }
 
     @Override
@@ -97,7 +96,16 @@ public class KalahaController implements Observer
         }
         else
         {
-            //TODO (player update)
+            kalahapane.setActivePlayer(((Player) arg).getID());
+        }
+    }
+    @Override
+    public void mousePressed(MouseEvent me)
+    {
+        if(board.endReached())
+        {
+            System.out.println("*click*");
+            ready();
         }
     }
 }

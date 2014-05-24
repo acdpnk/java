@@ -25,6 +25,11 @@ public class Player
         return name;
     }
 
+    public int getID()
+    {
+        return id;
+    }
+
     public PlayerType getType()
     {
         return type;

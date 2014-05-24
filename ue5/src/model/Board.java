@@ -138,7 +138,7 @@ public class Board extends Observable
         // player.
         if (lastSeed % NUM_PITS != activePlayer.getKalaha())
         {
-            activePlayer = getOpponent();
+            setActivePlayer(getOpponent());
             System.out.println(activePlayer.getName() + "\'s turn");
         }
 
@@ -149,7 +149,7 @@ public class Board extends Observable
         }
     }
 
-    private boolean endReached()
+    public boolean endReached()
     {
         int playerOneSeeds = 0;
         int playerTwoSeeds = 0;

@@ -17,7 +17,6 @@ public class PitPane extends JPanel implements ActionListener//, Observer
     {
         super();
         this.controller = controller;
-        setSize(200,800);
         setLayout(new BorderLayout());
         pits = new Pit[14];
 
