@@ -131,6 +131,8 @@ public class Board extends Observable
             System.out.println("END");
             clean();
         }
+        else // if the end is reached, no more playing
+
         // if the last seed dropped into the active player's kalaha,
         // they get another move. else, active status goes to the other
         // player.

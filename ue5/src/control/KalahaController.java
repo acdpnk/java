@@ -75,7 +75,7 @@ public class KalahaController implements Observer
         board.setActivePlayer(playerOne);
     }
 
-    private void finalizeGame(Board board)
+    public void finalizeGame(Board board)
     {
         // TODO
     }
