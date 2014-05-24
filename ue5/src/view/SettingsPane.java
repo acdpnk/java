@@ -12,6 +12,7 @@ public class SettingsPane extends JPanel implements ActionListener
     private KalahaController controller;
     private JCheckBox playerOneAI, playerTwoAI;
     private JTextField playerOneName, playerTwoName;
+    private JPanel playerOnePanel, playerTwoPanel;
     private JButton goButton;
     public SettingsPane(KalahaController controller)
     {
@@ -21,14 +22,18 @@ public class SettingsPane extends JPanel implements ActionListener
         playerTwoAI.setSelected(true);
         playerOneName = new JTextField("Player 1");
         playerTwoName = new JTextField("Player 2");
+        playerOnePanel = new JPanel();
+        playerTwoPanel = new JPanel();
         goButton = new JButton("go");
 
         setLayout(new BorderLayout());
 
-        add(playerTwoName, BorderLayout.PAGE_START);
-        add(playerTwoAI, BorderLayout.PAGE_START);
-        add(playerOneName, BorderLayout.CENTER);
-        add(playerOneAI, BorderLayout.CENTER);
+        add(playerTwoPanel, BorderLayout.PAGE_START);
+        add(playerOnePanel, BorderLayout.CENTER);
+        playerTwoPanel.add(playerTwoName);
+        playerTwoPanel.add(playerTwoAI);
+        playerOnePanel.add(playerOneName);
+        playerOnePanel.add(playerOneAI);
         add(goButton, BorderLayout.PAGE_END);
 
         goButton.addActionListener(this);
