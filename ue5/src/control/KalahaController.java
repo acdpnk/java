@@ -1,6 +1,7 @@
 package control;
 
-import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Observer;
 import java.util.Observable;
@@ -9,7 +10,9 @@ import model.*;
 
 public class KalahaController implements Observer
 {
-    private JFrame testframe;
+    private JFrame mainframe;
+    private JPanel mainpane;
+    private JLabel playeronelabel, playertwolabel;
     private PitPane pitpane;
     private SettingsPane settingspane;
     private Board board;
@@ -19,15 +22,24 @@ public class KalahaController implements Observer
 
     public KalahaController()
     {
-        testframe = new JFrame();
-        testframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        testframe.setLocationRelativeTo(null);
+        mainframe = new JFrame();
+        mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainframe.setLocationRelativeTo(null);
+
+        mainpane = new JPanel();
+        mainframe.add(mainpane);
+
+        mainpane.setLayout(new BorderLayout());
 
         settingspane = new SettingsPane(this);
+        pitpane = new PitPane(this);
 
-        testframe.add(settingspane);
-        testframe.setSize(800,200);
-        testframe.setVisible(true);
+        playeronelabel = new JLabel("",SwingConstants.CENTER);
+        playertwolabel = new JLabel("",SwingConstants.CENTER);
+
+        mainpane.add(settingspane, BorderLayout.CENTER);
+        mainframe.setSize(800,200);
+        mainframe.setVisible(true);
 
 
         // playerOne = new Player("foo", Player.ONE);
@@ -48,10 +60,14 @@ public class KalahaController implements Observer
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
 
-        pitpane = new PitPane(this);
-        testframe.remove(settingspane);
-        testframe.add(pitpane);
-        testframe.setSize(800,200);
+        playeronelabel.setText(playerOne.getName());
+        playertwolabel.setText(playerTwo.getName());
+
+        mainpane.removeAll();
+        mainpane.add(pitpane, BorderLayout.CENTER);
+        mainpane.add(playertwolabel, BorderLayout.PAGE_START);
+        mainpane.add(playeronelabel, BorderLayout.PAGE_END);
+        mainpane.setSize(800,300);
 
         board = new Board(playerOne, playerTwo);
         board.addObserver(this);
@@ -78,6 +94,10 @@ public class KalahaController implements Observer
             int seeds = ((Board) o).getSeeds(pit);
 
             pitpane.setPit(pit, seeds);
+        }
+        else
+        {
+            //TODO (player update)
         }
     }
 }

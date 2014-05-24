@@ -2,8 +2,8 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Observer;
-import java.util.Observable;
+// import java.util.Observer;
+// import java.util.Observable;
 import model.Board;
 import model.Player;
 import control.KalahaController;
@@ -27,7 +27,7 @@ public class PitPane extends JPanel implements ActionListener//, Observer
         for (int i=0; i<14; i++)
         {
             pits[i] = new Pit(i);
-            pits[i].setText(Integer.toString(i));
+            // pits[i].setText(Integer.toString(i));
             pits[i].addActionListener(this);
         }
 
