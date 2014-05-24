@@ -8,7 +8,7 @@ import model.Board;
 import model.Player;
 import control.KalahaController;
 
-public class PitPane extends JPanel implements ActionListener, Observer
+public class PitPane extends JPanel implements ActionListener//, Observer
 {
     private Pit[] pits;
     private KalahaController controller;
@@ -47,6 +47,11 @@ public class PitPane extends JPanel implements ActionListener, Observer
         add(centerPane, BorderLayout.CENTER);
     }
 
+    public void setPit(int pit, int seeds)
+    {
+        pits[pit].setText(Integer.toString(seeds));
+    }
+
     @Override
     public void actionPerformed(ActionEvent ae)
     {
@@ -57,15 +62,15 @@ public class PitPane extends JPanel implements ActionListener, Observer
 
     }
 
-    @Override
-    public void update(Observable o, Object arg)
-    {
-        if(!(arg instanceof Player))
-        {
-            int pit = (Integer) arg;
-            int seeds = ((Board) o).getSeeds(pit);
+    // @Override
+    // public void update(Observable o, Object arg)
+    // {
+    //     if(!(arg instanceof Player))
+    //     {
+    //         int pit = (Integer) arg;
+    //         int seeds = ((Board) o).getSeeds(pit);
 
-            pits[pit].setText(Integer.toString(seeds));
-        }
-    }
+    //         pits[pit].setText(Integer.toString(seeds));
+    //     }
+    // }
 }

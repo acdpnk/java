@@ -2,10 +2,12 @@ package control;
 
 import javax.swing.JFrame;
 import java.util.Arrays;
+import java.util.Observer;
+import java.util.Observable;
 import view.*;
 import model.*;
 
-public class KalahaController
+public class KalahaController implements Observer
 {
     private JFrame testframe;
     private PitPane pitpane;
@@ -52,7 +54,7 @@ public class KalahaController
         testframe.setSize(800,200);
 
         board = new Board(playerOne, playerTwo);
-        board.addObserver(pitpane);
+        board.addObserver(this);
         board.setUp();
         board.setActivePlayer(playerOne);
     }
@@ -65,5 +67,17 @@ public class KalahaController
     public void pitChosen(int pit)
     {
         board.move(pit);
+    }
+
+    @Override
+    public void update(Observable o, Object arg)
+    {
+        if(!(arg instanceof Player))
+        {
+            int pit = (Integer) arg;
+            int seeds = ((Board) o).getSeeds(pit);
+
+            pitpane.setPit(pit, seeds);
+        }
     }
 }
