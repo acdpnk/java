@@ -2,13 +2,11 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-// import java.util.Observer;
-// import java.util.Observable;
 import model.Board;
 import model.Player;
 import control.KalahaController;
 
-public class PitPane extends JPanel implements ActionListener//, Observer
+public class PitPane extends JPanel implements ActionListener
 {
     private Pit[] pits;
     private KalahaController controller;
@@ -26,7 +24,6 @@ public class PitPane extends JPanel implements ActionListener//, Observer
         for (int i=0; i<14; i++)
         {
             pits[i] = new Pit(i);
-            // pits[i].setText(Integer.toString(i));
             pits[i].addActionListener(this);
         }
 
@@ -55,21 +52,6 @@ public class PitPane extends JPanel implements ActionListener//, Observer
     public void actionPerformed(ActionEvent ae)
     {
         int sourceID = ((Pit) ae.getSource()).getID();
-        //System.out.println(sourceID);
-
         controller.pitChosen(sourceID);
-
     }
-
-    // @Override
-    // public void update(Observable o, Object arg)
-    // {
-    //     if(!(arg instanceof Player))
-    //     {
-    //         int pit = (Integer) arg;
-    //         int seeds = ((Board) o).getSeeds(pit);
-
-    //         pits[pit].setText(Integer.toString(seeds));
-    //     }
-    // }
 }
