@@ -64,6 +64,11 @@ public class KalahaController extends MouseAdapter implements Observer
         board.setActivePlayer(playerOne);
         mainframe.validate();
         mainframe.repaint();
+
+        if (board.getActivePlayer().getType() == PlayerType.AI)
+        {
+            board.move(((AI) board.getActivePlayer()).pickMove(board));
+        }
     }
 
     public void finalizeGame(Player winner)
