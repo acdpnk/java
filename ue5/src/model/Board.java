@@ -82,22 +82,31 @@ public class Board extends Observable implements Cloneable
         setSeeds(playerTwo.getKalaha(),0);
     }
 
-    public void move(int pit)
+    public boolean moveIsLegal(int pit)
     {
         // kalahas can't be chosen.
         if (pit == playerOne.getKalaha() || pit == playerTwo.getKalaha())
         {
-            return;
+            return false;
         }
 
         // if the pit doesn't belong to the active player, it can't be chosen.
         if (Arrays.binarySearch(activePlayer.getPits(), pit) < 0)
         {
-            return;
+            return false;
         }
 
         // if the pit is empty, it can't be chosen;
         if (getSeeds(pit) == 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+    public void move(int pit)
+    {
+        if (! moveIsLegal(pit))
         {
             return;
         }
