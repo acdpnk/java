@@ -1,16 +1,27 @@
-import javax.swing.*;
-import java.awt.*;
 import control.KalahaController;
+// import model.*;
 
 public class Test
 {
     public static void main(String[] args)
     {
         KalahaController ctrl = new KalahaController();
-        //JFrame frame = new JFrame();
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.add(new PitPane());
-        //frame.setVisible(true);
-        //frame.pack();
+        // Board board = new Board(new Player("Horst", Player.ONE), new AI("Morgan", Player.TWO));
+        // board.setUp();
+        // Board clone = board.clone();
+
+        // if (board == clone)
+        // {
+        //     System.out.println("== check");
+        // }
+
+        // if (board.equals(clone))
+        // {
+        //     System.out.println("equals check");
+        // }
+
+        // System.out.println(board);
+        // System.out.println(clone);
+
     }
 }

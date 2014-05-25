@@ -3,7 +3,7 @@ package model;
 import java.util.Observable;
 import java.util.Arrays;
 
-public class Board extends Observable
+public class Board extends Observable implements Cloneable
 {
     public static final int NUM_PITS = 14;
     private int[] pits;
@@ -15,6 +15,14 @@ public class Board extends Observable
         this.playerTwo = playerTwo;
         setActivePlayer(playerOne);
         pits = new int[NUM_PITS];
+    }
+
+    private Board(Player playerOne, Player playerTwo, Player activePlayer,
+                    int[] pits) // for cloning
+    {
+        this(playerOne, playerTwo);
+        setActivePlayer(activePlayer);
+        this.pits = pits;
     }
 
     public Player getActivePlayer()
@@ -188,5 +196,20 @@ public class Board extends Observable
         setSeeds(playerTwo.getKalaha(), playerTwoSeeds);
         setChanged();
         notifyObservers(playerOneSeeds > playerTwoSeeds ? playerOne : playerTwo);
+    }
+
+    @Override
+    public Board clone()
+    {
+        return new Board(playerOne, playerTwo, activePlayer, pits);
+    }
+
+    @Override
+    public String toString() // for debugging purposes
+    {
+        return  "Player One: " + playerOne.getName() + "\n" +
+                "Player Two: " + playerTwo.getName() + "\n" +
+                "active:     " + getActivePlayer().getName() + "\n" +
+                "pits:       " + Arrays.toString(pits);
     }
 }
