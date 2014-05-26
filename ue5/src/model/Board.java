@@ -13,12 +13,13 @@ public class Board extends Observable implements Cloneable
     {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        setActivePlayer(playerOne);
+        // setActivePlayer(playerOne);
         pits = new int[NUM_PITS];
     }
 
+    // for cloning
     private Board(Player playerOne, Player playerTwo, Player activePlayer,
-                    int[] pits) // for cloning
+                    int[] pits)
     {
         this(playerOne, playerTwo);
         setActivePlayer(activePlayer);
@@ -143,26 +144,20 @@ public class Board extends Observable implements Cloneable
                 getSeeds(activePlayer.getKalaha()) + capturedSeeds);
         }
 
+        // if the end is reached, no more playing
+        // if the last seed dropped into the active player's kalaha,
+        // they get another move. else, active status goes to the other
+        // player.
         if (endReached())
         {
             System.out.println("END");
             clean();
         }
-        else // if the end is reached, no more playing
-
-        // if the last seed dropped into the active player's kalaha,
-        // they get another move. else, active status goes to the other
-        // player.
-        if (lastSeed % NUM_PITS != activePlayer.getKalaha())
+        else if (lastSeed % NUM_PITS != activePlayer.getKalaha())
         {
             setActivePlayer(getOpponent());
-            System.out.println(activePlayer.getName() + "\'s turn");
-        }
-
-        while (activePlayer.getType() == PlayerType.AI &&
-            endReached() == false)
-        {
-            move(((AI) activePlayer).pickMove(this));
+            // System.out.println(activePlayer.getName() + "\'s turn");
+            // System.out.println("meep");
         }
     }
 

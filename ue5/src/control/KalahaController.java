@@ -39,7 +39,7 @@ public class KalahaController extends MouseAdapter implements Observer
         mainframe.validate();
     }
 
-    public void ready()
+    public void reset()
     {
         mainframe.remove(kalahapane);
         mainframe.add(settingspane, BorderLayout.CENTER);
@@ -61,14 +61,11 @@ public class KalahaController extends MouseAdapter implements Observer
         mainframe.remove(settingspane);
         mainframe.add(kalahapane);
 
-        board.setActivePlayer(playerOne);
         mainframe.validate();
         mainframe.repaint();
 
-        if (board.getActivePlayer().getType() == PlayerType.AI)
-        {
-            board.move(((AI) board.getActivePlayer()).pickMove(board));
-        }
+        board.setActivePlayer(playerOne);
+
     }
 
     public void finalizeGame(Player winner)
@@ -80,9 +77,9 @@ public class KalahaController extends MouseAdapter implements Observer
     {
         if(board.endReached())
         {
-            ready();
+            reset();
         }
-        else
+        else if (board.getActivePlayer().getType() == PlayerType.HUMAN)
         {
             board.move(pit);
         }
@@ -101,19 +98,26 @@ public class KalahaController extends MouseAdapter implements Observer
         else if (! board.endReached())
         {
             kalahapane.setActivePlayer(((Player) arg).getID());
+
+            while (board.getActivePlayer().getType() == PlayerType.AI &&
+            board.endReached() == false)
+            {
+                board.move(((AI) board.getActivePlayer()).pickMove(board));
+            }
         }
         else
         {
             finalizeGame((Player) arg);
         }
     }
+
     @Override
     public void mousePressed(MouseEvent me)
     {
         if(board.endReached())
         {
             System.out.println("*click*");
-            ready();
+            reset();
         }
     }
 }
