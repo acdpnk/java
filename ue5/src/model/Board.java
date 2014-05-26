@@ -13,7 +13,6 @@ public class Board extends Observable implements Cloneable
     {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        setActivePlayer(playerOne);
         pits = new int[NUM_PITS];
     }
 
@@ -118,8 +117,6 @@ public class Board extends Observable implements Cloneable
     }
     public void executeMove(int pit)
     {
-        // System.out.println(activePlayer.getName() + ": " + pit);
-
         int seeds = getSeeds(pit);
         setSeeds(pit,0);
         for (int i=1; i<=seeds; i++)
@@ -156,14 +153,11 @@ public class Board extends Observable implements Cloneable
         // player.
         if (endReached())
         {
-            // System.out.println("END");
             clean();
         }
         else if (lastSeed % NUM_PITS != activePlayer.getKalaha())
         {
             setActivePlayer(getOpponent(getActivePlayer()));
-            // System.out.println(activePlayer.getName() + "\'s turn");
-            // System.out.println("meep");
         }
     }
 

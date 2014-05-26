@@ -19,13 +19,6 @@ public class AI extends Player
     {
         move = -1;
         alphaBeta(board, START_DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE);
-        if(move == -1)
-        {
-            System.out.println("move -1, something wrong.\n" +
-                               "picking " + move);
-            int randomChoice = getPits()[(int) (Math.random()*6)];
-            return randomChoice;
-        }
         System.out.println(getName() + ": " + move);
         return move;
     }

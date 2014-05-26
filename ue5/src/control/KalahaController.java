@@ -64,7 +64,10 @@ public class KalahaController extends MouseAdapter implements Observer
         mainframe.validate();
         mainframe.repaint();
 
-        board.setActivePlayer(playerOne);
+        Player openingPlayer = ((int) (Math.random()*2)) > 0 ? playerOne : playerTwo;
+        System.out.println("\n\n*NEW GAME*\n" +
+                           openingPlayer.getName() + " begins\n");
+        board.setActivePlayer(openingPlayer);
 
     }
 
