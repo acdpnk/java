@@ -81,6 +81,7 @@ public class KalahaController extends MouseAdapter implements Observer
         }
         else if (board.getActivePlayer().getType() == PlayerType.HUMAN)
         {
+            System.out.println(board.getActivePlayer().getName()+ ": " + pit);
             board.move(pit);
         }
     }

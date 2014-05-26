@@ -3,8 +3,12 @@ import control.KalahaController;
 
 public class Test
 {
+    // private static final int INF = Integer.MAX_VALUE;
+    // private static final int NEG_INF = Integer.MIN_VALUE;
+
     public static void main(String[] args)
     {
+        // System.out.println(Integer.toString(INF) + Integer.toString(NEG_INF));
         KalahaController ctrl = new KalahaController();
         // Board board = new Board(new Player("Horst", Player.ONE), new AI("Morgan", Player.TWO));
         // board.setUp();

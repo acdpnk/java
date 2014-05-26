@@ -41,9 +41,9 @@ public class Board extends Observable implements Cloneable
         notifyObservers(activePlayer);
     }
 
-    public Player getOpponent()
+    public Player getOpponent(Player player)
     {
-        return playerOne == activePlayer ? playerTwo : playerOne;
+        return playerOne == player ? playerTwo : playerOne;
     }
 
     public int getSeeds(int pit)
@@ -114,8 +114,11 @@ public class Board extends Observable implements Cloneable
         {
             return;
         }
-
-        System.out.println(activePlayer.getName() + ": " + pit);
+        executeMove(pit);
+    }
+    public void executeMove(int pit)
+    {
+        // System.out.println(activePlayer.getName() + ": " + pit);
 
         int seeds = getSeeds(pit);
         setSeeds(pit,0);
@@ -123,7 +126,7 @@ public class Board extends Observable implements Cloneable
         {
             // if the pit we'd be putting seeds in is the opponent's kalaha,
             // skip it instead.
-            if ((pit + i) % NUM_PITS == getOpponent().getKalaha())
+            if ((pit + i) % NUM_PITS == getOpponent(getActivePlayer()).getKalaha())
             {
                 seeds++;
             }
@@ -153,12 +156,12 @@ public class Board extends Observable implements Cloneable
         // player.
         if (endReached())
         {
-            System.out.println("END");
+            // System.out.println("END");
             clean();
         }
         else if (lastSeed % NUM_PITS != activePlayer.getKalaha())
         {
-            setActivePlayer(getOpponent());
+            setActivePlayer(getOpponent(getActivePlayer()));
             // System.out.println(activePlayer.getName() + "\'s turn");
             // System.out.println("meep");
         }
