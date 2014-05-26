@@ -10,15 +10,17 @@ public class Test
         // board.setUp();
         // Board clone = board.clone();
 
-        // if (board == clone)
-        // {
-        //     System.out.println("== check");
-        // }
+        // clone.setSeeds(13,7);
 
-        // if (board.equals(clone))
-        // {
-        //     System.out.println("equals check");
-        // }
+        // // if (board.playerOne == clone.playerOne)
+        // // {
+        // //     System.out.println("== check");
+        // // }
+
+        // // if (board.playerOne.equals(clone.playerOne))
+        // // {
+        // //     System.out.println("equals check");
+        // // }
 
         // System.out.println(board);
         // System.out.println(clone);

@@ -13,7 +13,7 @@ public class Board extends Observable implements Cloneable
     {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        // setActivePlayer(playerOne);
+        setActivePlayer(playerOne);
         pits = new int[NUM_PITS];
     }
 
@@ -23,7 +23,10 @@ public class Board extends Observable implements Cloneable
     {
         this(playerOne, playerTwo);
         setActivePlayer(activePlayer);
-        this.pits = pits;
+        for (int i=0; i<NUM_PITS; i++)
+        {
+            this.pits[i] = pits[i];
+        }
     }
 
     public Player getActivePlayer()
