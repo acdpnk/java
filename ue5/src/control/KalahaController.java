@@ -27,7 +27,7 @@ public class KalahaController extends MouseAdapter implements Observer
 
         kalahapane.add(pitpane, BorderLayout.CENTER);
 
-        mainframe.setSize(800,201);
+        mainframe.setSize(600,200);
         mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainframe.setLocationRelativeTo(null);
 
@@ -108,6 +108,15 @@ public class KalahaController extends MouseAdapter implements Observer
             {
                 board.move(((AI) board.getActivePlayer()).pickMove(board));
             }
+        }
+        // looks crazy, but is just a harmless thing to check for draws.
+        // should probably be in the Board but is not needed anywhere else.
+        else if (((Board) o).getSeeds(((Player) arg).getKalaha()) ==
+                 ((Board) o).getSeeds(((Board) o).getOpponent(
+                 ((Player) arg)).getKalaha()))
+        {
+            finalizeGame((Player) arg);
+            finalizeGame(((Board) o).getOpponent((Player) arg));
         }
         else
         {
